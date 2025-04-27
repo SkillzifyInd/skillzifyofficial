@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Skillzify</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: white;
+            color: black;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            width: 50%;
+            margin: 90px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .contact-container h2 {
+            text-align: center;
+        }
+        
+        .dark-mode h4{
+            color: black;
+        }
+
+        p{
+            color: red;
+        }
+        .dark-mode label{
+            color: black;
+        }
+        .dark-mode span{
+            color: black;
+        }
+        form input{
+            width: 94%;
+        }
+        input, textarea {
+            width: 94%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        
+    
+    </style>
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3FcUoQZ811vygR9oDITUwwiCDALYJ5zE",
+            authDomain: "skillzify2024.firebaseapp.com",
+            databaseURL: "https://skillzify2024-default-rtdb.firebaseio.com",
+            projectId: "skillzify2024",
+            storageBucket: "skillzify2024.firebasestorage.app",
+            messagingSenderId: "502836069827",
+            appId: "1:502836069827:web:db3ff7fd2fd161c4d6a976",
+            measurementId: "G-EMJ8DSPWYE"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("contact-form").addEventListener("submit", async function(event) {
+                event.preventDefault();
+                document.getElementById("submit-btn").innerHTML = "Submitting...";
+
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+                const message = document.getElementById("message").value;
+                const rating = document.getElementById("rating").value;
+
+                try {
+                    await addDoc(collection(db, "feedback"), {
+                        name,
+                        email,
+                        message,
+                        rating,
+                        timestamp: new Date()
+                    });
+                    document.getElementById("response-message").innerHTML = "<span class='success-animation'>&#10004;</span><p> Thank you for your feedback!</p>";
+                    document.getElementById("contact-form").reset();
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    document.getElementById("response-message").innerText = "Error submitting feedback.";
+                }
+                document.getElementById("submit-btn").innerHTML = "Send Feedback";
+            });
+       
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("login-link").style.display = "none";
+                document.getElementById("register-link").style.display = "none";
+                document.getElementById("logout-btn").style.display = "inline-block";
+                document.getElementById("login-link2").style.display = "none";
+                document.getElementById("register-link2").style.display = "none";
+                document.getElementById("logout-btn2").style.display = "inline-block";
+            } else {
+                document.getElementById("login-link").style.display = "inline-block";
+                document.getElementById("register-link").style.display = "inline-block";
+                document.getElementById("logout-btn").style.display = "none";
+                document.getElementById("login-link2").style.display = "inline-block";
+                document.getElementById("register-link2").style.display = "inline-block";
+                document.getElementById("logout-btn2").style.display = "none";
+            }
+        });
+
+        });
+    
+        window.logout = () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            }).catch((error) => {
+                console.error("Logout failed", error);
+                alert("Logout failed. Please try again.");
+            });
+        };
+
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header-container" style="margin-top: -90px;">
+        <button style="background: local;" class="menu-toggle" onclick="toggleSidebar()"><i class='bx bx-menu'></i></button>
+        
+        <div class="logo">
+            <a href="index.html"><img id="logo-img" src="Dark No BG.png" alt="Skillzify Logo"></a>
+        </div>
+        <div class="nav">
+            <a href="index.html"><b>Home</b></a>
+            <a href="study_mate.html"><b>Study Materials</b></a>
+            <a href="Python Learning/index.html"><b>Python Learning</b></a>
+            <a href="compiler.html"><b>Python Compiler</b></a>
+            <a href="aboutus.html"><b>About Us</b></a>
+            <a href="login.html" id="login-link"><b>Login</b></a>
+            <a href="register.html" id="register-link"><b>Register</b></a>
+            <button  id="logout-btn" style="display:none; " onclick="logout()"><b>Logout</b></button>
+            <button style="background: local;" class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar-menu">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="index.html"><b>Home</b></a>
+        <a href="study_mate.html"><b>Study Materials</b></a>
+        <a href="Python Learning/index.html"><b>Python Learning</b></a>
+        <a href="compiler.html"><b>Python Compiler</b></a>
+        <a href="aboutus.html"><b>About Us</b></a>
+        <a href="login.html" id="login-link2"><b>Login</b></a>
+        <a href="register.html" id="register-link2"><b>Register</b></a>
+        <a><button id="logout-btn2" style="display:none;" onclick="logout()"><b>Logout</b></button></a>
+        <button style="background: local;" class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+    </div>
+    <!-- Navbar End -->
+    
+
+    <!-- Contact Section -->
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <h4>We'd love to hear your feedback!</h4>
+
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" rows="4" required></textarea>
+            <span id="char-count">0/200</span>
+
+            <label>Rate your experience:</label>
+            <div class="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="">
+
+            <button type="submit" id="submit-btn">Send Feedback</button>
+        </form>
+
+        <div id="response-message"></div>
+    </div>
+
+    <a href="https://whatsapp.com/channel/0029Vb0aOSuG8l5DXJAK0S3X" class="whatsapp-float" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+    
+    <div class="footer">
+        <h5>&copy; 2025 Skillzify. All Rights Reserved.</h5>
+    </div>
+
+    <script>
+
+        function toggleTheme() {
+            let darkMode = localStorage.getItem("dark-mode");
+            document.body.classList.toggle('dark-mode', darkMode !== "enabled");
+            localStorage.setItem("dark-mode", darkMode === "enabled" ? "disabled" : "enabled");
+            document.getElementById("logo-img").src = darkMode === "enabled" ? "Dark No BG.png" : "Light No BG.png";
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar-menu").classList.toggle("active");
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                document.getElementById("logo-img").src = "Light No BG.png";
+            }
+        };
+
+        document.getElementById("message").addEventListener("input", function() {
+            document.getElementById("char-count").textContent = `${this.value.length}/200`;
+        });
+
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                let value = this.getAttribute('data-value');
+                document.getElementById('rating').value = value;
+                document.querySelectorAll('.star').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="-0FMOHrX1VX3RWxWj6X94";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+        document.addEventListener("DOMContentLoaded", function () {
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('rating');
+    
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseover', function () {
+                    highlightStars(index);
+                });
+    
+                star.addEventListener('mouseleave', function () {
+                    resetStars();
+                });
+    
+                star.addEventListener('click', function () {
+                    selectStars(index);
+                });
+            });
+    
+            function highlightStars(index) {
+                stars.forEach((star, i) => {
+                    star.classList.toggle('hovered', i <= index);
+                });
+            }
+    
+            function resetStars() {
+                stars.forEach(star => {
+                    star.classList.remove('hovered');
+                });
+            }
+    
+            function selectStars(index) {
+                ratingInput.value = index + 1;
+                stars.forEach((star, i) => {
+                    star.classList.toggle('selected', i <= index);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

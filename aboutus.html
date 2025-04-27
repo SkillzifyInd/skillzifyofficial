@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Skillzify</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  <!-- Feather Icons & GSAP -->
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: white;
+        color: black;
+        transition: background 0.3s, color 0.3s;
+      }
+      
+
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #0205a7;
+    }
+
+    .timeline {
+      text-align: left;
+      margin-top: 50px;
+    }
+
+    .timeline-entry {
+      margin-bottom: 30px;
+      padding: 10px;
+      border-left: 3px solid #0205a7;
+      padding-left: 20px;
+    }
+
+    .timeline-entry h4 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .team-section {
+      margin-top: 60px;
+    }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .team-member {
+      flex: 1 1 200px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 15px;
+      max-width: 250px;
+      background: #f9f9f9;
+      transition: transform 0.3s;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-member img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+
+    .faq-section {
+      margin-top: 60px;
+      text-align: left;
+    }
+
+    .faq-box {
+      background: #f0f0f0;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-left: 5px solid #0205a7;
+      border-radius: 8px;
+    }
+
+    .faq-box h3 {
+      margin: 0 0 5px;
+      font-size: 1.2rem;
+    }
+
+    /* Dark Mode Styling */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+  }
+  
+  /* Header Text */
+  h1, h2, h3, h4, p {
+    transition: color 0.3s;
+  }
+  
+  .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode p {
+    color: white;
+  }
+  
+  /* Link Styling */
+  a {
+    color: #0205a7;
+    transition: color 0.3s;
+  }
+  
+  
+  /* Footer and Button Styles */
+  button {
+    background-color: #0205a7;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .dark-mode button {
+    background-color: #4f8cff;
+    color: black;
+  }
+
+    .dark-mode .team-member {
+      background: #1e1e1e;
+    }
+
+    .dark-mode .faq-box {
+      background: #1e1e1e;
+      border-left-color: #4f8cff;
+    }
+  </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA3FcUoQZ811vygR9oDITUwwiCDALYJ5zE",
+        authDomain: "skillzify2024.firebaseapp.com",
+        projectId: "skillzify2024",
+        storageBucket: "skillzify2024.firebasestorage.app",
+        messagingSenderId: "502836069827",
+        appId: "1:502836069827:web:db3ff7fd2fd161c4d6a976",
+        measurementId: "G-EMJ8DSPWYE"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById("login-link").style.display = "none";
+            document.getElementById("register-link").style.display = "none";
+            document.getElementById("logout-btn").style.display = "inline-block";
+        } else {
+            document.getElementById("login-link").style.display = "inline-block";
+            document.getElementById("register-link").style.display = "inline-block";
+            document.getElementById("logout-btn").style.display = "none";
+        }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById("login-link2").style.display = "none";
+            document.getElementById("register-link2").style.display = "none";
+            document.getElementById("logout-btn2").style.display = "inline-block";
+        } else {
+            document.getElementById("login-link2").style.display = "inline-block";
+            document.getElementById("register-link2").style.display = "inline-block";
+            document.getElementById("logout-btn2").style.display = "none";
+        }
+    });
+
+    window.logout = () => {
+        signOut(auth).then(() => {
+            window.location.reload();
+        }).catch((error) => {
+            console.error("Logout failed", error);
+        });
+    };
+</script>
+</head>
+<body>
+    <div class="header-container" style="margin-top: -50px;">
+        <button class="menu-toggle" onclick="toggleSidebar()"><i class='bx bx-menu'></i></button>
+        
+        <div class="logo">
+            <a href="index.html"><img id="logo-img" src="Dark No BG.png" alt="Skillzify Logo"></a>
+        </div>
+        <div class="nav">
+            <a href="index.html"><b>Home</b></a>
+            <a href="study_mate.html"><b>Study Materials</b></a>
+            <a href="Python Learning/index.html"><b>Python Learning</b></a>
+            <a href="compiler.html"><b>Python Compiler</b></a>
+            <a href="contact.html"><b>Contact</b></a>
+            <a href="login.html" id="login-link"><b>Login</b></a>
+            <a href="register.html" id="register-link"><b>Register</b></a>
+            <button id="logout-btn" style="display:none;" onclick="logout()"><b>Logout</b></button>
+            <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar-menu">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="index.html"><b>Home</b></a>
+        <a href="study_mate.html"><b>Study Materials</b></a>
+        <a href="Python Learning/index.html"><b>Python Learning</b></a>
+        <a href="compiler.html"><b>Python Compiler</b></a>
+        <a href="contact.html"><b>Contact</b></a>
+        <a href="login.html" id="login-link2"><b>Login</b></a>
+        <a href="register.html" id="register-link2"><b>Register</b></a>
+        <a><button id="logout-btn2" style="display:none;" onclick="logout()"><b>Logout</b></button></a>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+    </div>
+
+  <div class="container">
+    <h1><i data-feather="activity"></i> About Skillzify</h1>
+    <p>Skillzify is your go-to platform to master Python, AI, and programming tools. Our goal is to make learning fun, interactive, and effective.</p>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <h2><i data-feather="clock"></i> Our Journey</h2>
+      <div class="timeline-entry">
+        <h4><i data-feather="zap"></i> 2024 - Idea Was Born</h4>
+        <p>Started with a vision to simplify Python learning and AI tools.</p>
+      </div>
+      <div class="timeline-entry">
+        <h4><i data-feather="layers"></i> 2025 - Developed Skillzify </h4>
+        <p>We developed Skillzify with Interactive compiler, Learning Materials, and AI support.</p>
+      </div>
+      <div class="timeline-entry">
+        <h4><i data-feather="trending-up"></i> Future Goals</h4>
+        <p>Bringing in real-time coding bots, advanced AI chatting, and more programming languages!</p>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+      <h2><i data-feather="users"></i> Our Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="https://i.pravatar.cc/100?img=1" alt="Vikas Patil">
+          <h3><i data-feather="code"></i> Vikas Patil</h3>
+          <p>Project Lead & Full Stack Development</p>
+        </div>
+        <div class="team-member">
+          <img src="https://i.pravatar.cc/100?img=2" alt="Tanvi Rawal">
+          <h3><i data-feather="code"></i> Tanvi Rawal</h3>
+          <p>Frontend & Notes Creation </p>
+        </div>
+      </div>
+      <br>
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="https://i.pravatar.cc/100?img=3" alt="Piyush Patil">
+          <h3><i data-feather="cpu"></i> Piyush Patil</h3>
+          <p>Compiler & AI Integration</p>
+        </div>
+        <div class="team-member">
+          <img src="https://i.pravatar.cc/100?img=3" alt="Tanay Koshti">
+          <h3><i data-feather="file-text"></i> Tanay Koshti</h3>
+          <p>Compiler & Project Documentation</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2><i data-feather="help-circle"></i> FAQs</h2>
+      <div class="faq-box">
+        <h3>What is Skillzify?</h3>
+        <p>A Python-focused platform with AI-powered features and interactive tools.</p>
+      </div>
+      <div class="faq-box">
+        <h3>Do I need to register?</h3>
+        <p>Public features are open, but premium tool like accessing pdfs you require login.</p>
+      </div>
+      <div class="faq-box">
+        <h3>Is the platform free?</h3>
+        <p>Yes! All features are free.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://whatsapp.com/channel/0029Vb0aOSuG8l5DXJAK0S3X" class="whatsapp-float" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+  <div class="footer">
+    <p>&copy; 2025 Skillzify. All Rights Reserved.</p>
+</div>
+  <!-- GSAP Animation Script -->
+  <script>
+    feather.replace();
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from("h1", {
+      y: -50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    gsap.from(".timeline-entry", {
+      scrollTrigger: {
+        trigger: ".timeline",
+        start: "top 80%",
+        toggleActions: "play none none none"
+      },
+      y: 50,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 1,
+      ease: "power2.out"
+    });
+
+    gsap.from(".team-member", {
+      scrollTrigger: {
+        trigger: ".team-grid",
+        start: "top 90%",
+        toggleActions: "play none none none"
+      },
+      opacity: 0,
+      y: 30,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power2.out"
+    });
+
+    gsap.from(".faq-box", {
+      scrollTrigger: {
+        trigger: ".faq-section",
+        start: "top 85%",
+        toggleActions: "play none none none"
+      },
+      opacity: 0,
+      x: -40,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power1.out"
+    });
+
+    function toggleTheme() {
+        const isDark = document.body.classList.contains("dark-mode");
+      
+        if (isDark) {
+          document.body.classList.remove("dark-mode");
+          localStorage.setItem("dark-mode", "enabled");
+          document.getElementById("logo-img").src = "Dark No BG.png";
+          const logo2 = document.getElementById("logo-img2");
+          if (logo2) logo2.src = "Dark No BG.png";
+        } else {
+          document.body.classList.add("dark-mode");
+          localStorage.setItem("dark-mode", "enabled");
+          document.getElementById("logo-img").src = "Light No BG.png";
+          const logo2 = document.getElementById("logo-img2");
+          if (logo2) logo2.src = "Light No BG.png";
+        }
+      }
+      
+      window.onload = () => {
+        const darkMode = localStorage.getItem("dark-mode");
+        if (darkMode === "enabled") {
+          document.body.classList.add("dark-mode");
+          document.getElementById("logo-img").src = "Light No BG.png";
+          const logo2 = document.getElementById("logo-img2");
+          if (logo2) logo2.src = "lIGHT No BG.png";
+        } else {
+          document.body.classList.remove("dark-mode");
+          document.getElementById("logo-img").src = "Dark No BG.png";
+          const logo2 = document.getElementById("logo-img2");
+          if (logo2) logo2.src = "Dark No BG.png";
+        }
+      };
+
+    function toggleSidebar() {
+        document.getElementById("sidebar-menu").classList.toggle("active");
+    }
+
+   
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="-0FMOHrX1VX3RWxWj6X94";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+
+  </script>
+</body>
+</html>

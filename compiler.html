@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillzify AI Compiler</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="compiler/codemirror-5.65.18/lib/codemirror.css">
+    <link rel="stylesheet" href="compiler/codemirror-5.65.18/theme/dracula.css">
+    <script src="compiler/codemirror-5.65.18/lib/codemirror.js"></script>
+    <script src="compiler/codemirror-5.65.18/mode/python/python.js"></script>
+    <script src="compiler/codemirror-5.65.18/addon/edit/closebrackets.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        #console {
+            height: 210px;
+            overflow-y: auto;
+            background: #1e1e2e;
+            color: #ffffff;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        #console-input {
+            background: #1e1e2e;
+            color: #ffffff;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: monospace;
+            padding: 5px;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3FcUoQZ811vygR9oDITUwwiCDALYJ5zE",
+            authDomain: "skillzify2024.firebaseapp.com",
+            projectId: "skillzify2024",
+            storageBucket: "skillzify2024.firebasestorage.app",
+            messagingSenderId: "502836069827",
+            appId: "1:502836069827:web:db3ff7fd2fd161c4d6a976",
+            measurementId: "G-EMJ8DSPWYE"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("login-link").style.display = "none";
+                document.getElementById("register-link").style.display = "none";
+                document.getElementById("logout-btn").style.display = "inline-block";
+            } else {
+                document.getElementById("login-link").style.display = "inline-block";
+                document.getElementById("register-link").style.display = "inline-block";
+                document.getElementById("logout-btn").style.display = "none";
+            }
+        });
+
+        window.logout = () => {
+            signOut(auth).then(() => {
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Logout failed", error);
+            });
+        };
+    </script>
+</head>
+<body class="bg-light" id="body" margin-top=50px>
+
+    <div class="header-container">
+        <div class="logo">
+            <a href="index.html"><img id="logo-img" src="Dark No BG.png" alt="Skillzify Logo"></a>
+        </div>
+        <div class="nav">
+            <a href="index.html"><b>Home</b></a>
+            <a href="study_mate.html"><b>Study Materials</b></a>
+            <a href="Python Learning/index.html"><b>Python Learning</b></a>
+            <a href="contact.html"><b>Contact</b></a>
+            <a href="aboutus.html"><b>About Us</b></a>
+            <a href="login.html" id="login-link"><b>Login</b></a>
+            <a href="register.html" id="register-link"><b>Register</b></a>
+            <button id="logout-btn" style="display:none;" onclick="logout()"><b>Logout</b></button>
+            <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar-menu">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="index.html"><b>Home</b></a>
+        <a href="study_mate.html"><b>Study Materials</b></a>
+        <a href="Python Learning/index.html"><b>Python Learning</b></a>
+        <a href="contact.html"><b>Contact</b></a>
+        <a href="aboutus.html"><b>About Us</b></a>
+        <a href="login.html" id="login-link2"><b>Login</b></a>
+        <a href="register.html" id="register-link2"><b>Register</b></a>
+        <a><button id="logout-btn2" style="display:none;" onclick="logout()"><b>Logout</b></button></a>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+    </div>
+
+    <div class="container py-4" style="margin-top: 50px;">
+        <div class="row">
+            <!-- <h1 style="color: red;">!!!Compiler Under Development!!!</h1> -->
+            <!-- Chatbox -->
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4>Chat with Skillzify AI</h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <iframe src="https://www.chatbase.co/chatbot-iframe/-0FMOHrX1VX3RWxWj6X94" width="100%" height="550"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compiler -->
+            <div class="col-lg-6 col-md-12">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between">
+                        <h5>Python Compiler Console</h5>
+                        <button class="btn btn-success" onclick="runCode()">Run <i class="bi bi-play-fill"></i></button>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="editor"></textarea>
+                        <div id="console" class="mt-3">
+                            <input type="text" id="console-input" placeholder="Output..." onkeypress="handleConsoleInput(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="https://whatsapp.com/channel/0029Vb0aOSuG8l5DXJAK0S3X" class="whatsapp-float" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+
+    </div>  
+
+    <script>
+        // Initialize CodeMirror Editor
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "python",
+            theme: "dracula",
+            lineNumbers: true,
+            autoCloseBrackets: true,
+        });
+        editor.setSize("100%", "300px");
+
+        let consoleElement = document.getElementById("console");
+        let pyodide;
+
+        async function loadPyodideEnv() {
+            pyodide = await loadPyodide();
+            appendToConsole("Python environment loaded.");
+        }
+        loadPyodideEnv();
+
+        async function runCode() {
+            if (!pyodide) {
+                appendToConsole("Python environment not yet loaded.");
+                return;
+            }
+
+            const code = editor.getValue();
+            consoleElement.innerHTML = "";
+            appendToConsole("Running code...");
+
+            try {
+                pyodide.runPython(`
+                    import sys
+                    import io
+                    sys.stdout = io.StringIO()
+                    sys.stderr = io.StringIO()
+                `);
+
+                await pyodide.runPythonAsync(code);
+                const result = pyodide.runPython("sys.stdout.getvalue()");
+                const error = pyodide.runPython("sys.stderr.getvalue()");
+                
+                if (error) appendToConsole("Error: " + error);
+                else appendToConsole(result || "Code executed successfully.");
+            } catch (err) {
+                appendToConsole("Execution Error: " + err.message);
+            }
+        }
+
+        function appendToConsole(text) {
+            consoleElement.innerHTML += text + "\n>>> ";
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+        }
+
+        function handleConsoleInput(event) {
+            if (event.key === "Enter") {
+                const input = event.target.value;
+                appendToConsole(input);
+                event.target.value = "";
+            }
+        }
+        function toggleTheme() {
+            let darkMode = localStorage.getItem("dark-mode");
+            document.body.classList.toggle('dark-mode', darkMode !== "enabled");
+            localStorage.setItem("dark-mode", darkMode === "enabled" ? "disabled" : "enabled");
+            document.getElementById("logo-img").src = darkMode === "enabled" ? "Dark No BG.png" : "Light No BG.png";
+            document.getElementById("logo-img2").src = darkMode === "enabled" ? "Dark No BG.png" : "Light No BG.png";
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar-menu").classList.toggle("active");
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                document.getElementById("logo-img").src = "Light No BG.png";
+                document.getElementById("logo-img2").src = "Light No BG.png";
+
+            }
+        };
+    
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="-0FMOHrX1VX3RWxWj6X94";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF File System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+<!-- Navbar Start -->
+<div class="header-container" style="margin-top: 0%;">
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class='bx bx-menu'></i></button>
+    
+    <div class="logo">
+        <a href="index.html"><img id="logo-img" src="Dark No BG.png" alt="Skillzify Logo"></a>
+    </div>
+    <div class="nav">
+        <a href="index.html"><b>Home</b></a>
+        <a href="Python Learning/index.html"><b>Python Learning</b></a>
+        <a href="compiler.html"><b>Python Compiler</b></a>
+        <a href="contact.html"><b>Contact</b></a>
+        <a href="aboutus.html"><b>About Us</b></a>
+        <a href="login.html" id="login-link"><b>Login</b></a>
+        <a href="register.html" id="register-link"><b>Register</b></a>
+        <button id="logout-btn" style="display:none;" onclick="logout()"><b>Logout</b></button>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+    </div>
+</div>
+<div class="sidebar" id="sidebar-menu">
+    <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+    <a href="index.html"><b>Home</b></a>
+    <a href="Python Learning/index.html"><b>Python Learning</b></a>
+    <a href="compiler.html"><b>Python Compiler</b></a>
+    <a href="contact.html"><b>Contact</b></a>
+    <a href="aboutus.html"><b>About Us</b></a>
+    <a href="login.html" id="login-link2"><b>Login</b></a>
+    <a href="register.html" id="register-link2"><b>Register</b></a>
+    <a><button id="logout-btn2" style="display:none;" onclick="logout()"><b>Logout</b></button></a>
+    <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+</div>
+<!-- Navbar End -->
+
+<!-- Main Container Start -->
+<div class="main-container">
+    <!-- File System Start -->
+
+    <div class="file-system">
+        <div class="folder" onclick="toggleFolder('tutorials')">📁 Python Notes</div>
+        <div id="tutorials" class="folder-content">
+            <div class="file" data-src="Notes/Unit-1.pdf">📄 Unit - 1</div>
+            <div class="file" data-src="Notes/Unit-2.pdf">📄 Unit - 2</div>
+            <div class="file" data-src="Notes/Unit-3.pdf">📄 Unit - 3</div>
+            <div class="file" data-src="Notes/Unit-4.pdf">📄 Unit - 4</div>
+            <div class="file" data-src="Notes/Unit-5.pdf">📄 Unit - 5</div>
+            <div class="file" data-src="Notes/Unit-6.pdf">📄 Unit - 6</div>
+        </div>
+        
+        <div class="folder" onclick="toggleFolder('guides')">📁 Python Model Answers </div>
+        <div id="guides" class="folder-content">
+            <div class="file" data-src="Notes/MAP/S-22.pdf">📄 Summer-22</div>
+            <div class="file" data-src="Notes/MAP/W-22.pdf">📄 Winter-22</div>
+            <div class="file" data-src="Notes/MAP/S-23.pdf">📄 Summer-23</div>
+            <div class="file" data-src="Notes/MAP/W-23.pdf">📄 Winter-23</div>
+            <!-- <div class="file" data-src="Notes/MAP/S-22.pdf">📄 Summer-22</div> -->
+        </div>
+
+        <!-- <div class="folder" onclick="toggleFolder('research')">📁 Research Papers</div>
+        <div id="research" class="folder-content">
+            <div class="file" data-src="research1.pdf">📄 Research Paper 1</div>
+            <div class="file" data-src="research2.pdf">📄 Research Paper 2</div>
+        </div>
+
+        <div class="folder exclusive" onclick="toggleFolder('exclusive')">🔒 Exclusive PDFs</div>
+        <div id="exclusive" class="folder-content restricted">
+            <div class="file" data-src="exclusive1.pdf">📄 Exclusive PDF 1</div>
+            <div class="file" data-src="exclusive2.pdf">📄 Exclusive PDF 2</div>
+        </div>-->
+    </div>
+    <!-- File System End -->
+
+    <!-- PDF Viewer Start -->
+    <div class="pdf-viewer">
+        <iframe id="pdfFrame" src="" width="100%" height="100%"></iframe>
+    </div>
+    <!-- PDF Viewer End -->
+</div>
+<!-- Main Container End -->
+
+<a href="https://whatsapp.com/channel/0029Vb0aOSuG8l5DXJAK0S3X" class="whatsapp-float" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+    
+<!-- Footer Start -->
+    <div class="footer" style="margin-top: 59px;">
+        <p>&copy; 2025 Skillzify. All Rights Reserved.</p>
+    </div>
+<!-- Footer End -->
+
+<!-- Script Start -->
+    <script>
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="-0FMOHrX1VX3RWxWj6X94";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+       
+        function toggleTheme() {
+            let darkMode = localStorage.getItem("dark-mode");
+            document.body.classList.toggle('dark-mode', darkMode !== "enabled");
+            localStorage.setItem("dark-mode", darkMode === "enabled" ? "disabled" : "enabled");
+            document.getElementById("logo-img").src = darkMode === "enabled" ? "Dark No BG.png" : "Light No BG.png";
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar-menu").classList.toggle("active");
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                document.getElementById("logo-img").src = "Light No BG.png";
+            }
+        };
+        
+        function toggleFolder(folderId) {
+            let folder = document.getElementById(folderId);
+            folder.style.display = folder.style.display === "block" ? "none" : "block";
+        }
+
+        document.querySelectorAll('.file').forEach(file => {
+            file.addEventListener('click', function() {
+            checkAuthAndOpenPDF(this.getAttribute('data-src'));
+
+            });
+        });
+        
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3FcUoQZ811vygR9oDITUwwiCDALYJ5zE",
+            authDomain: "skillzify2024.firebaseapp.com",
+            projectId: "skillzify2024",
+            storageBucket: "skillzify2024.firebasestorage.app",
+            messagingSenderId: "502836069827",
+            appId: "1:502836069827:web:db3ff7fd2fd161c4d6a976",
+            measurementId: "G-EMJ8DSPWYE"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in
+                document.getElementById("login-link").style.display = "none";
+                document.getElementById("register-link").style.display = "none";
+                document.getElementById("logout-btn").style.display = "inline-block";
+        
+                document.getElementById("login-link2").style.display = "none";
+                document.getElementById("register-link2").style.display = "none";
+                document.getElementById("logout-btn2").style.display = "inline-block";
+        
+                document.querySelectorAll('.restricted .file').forEach(file => {
+                    file.classList.remove('disabled');
+                });
+            } else {
+                // User is logged out
+                document.getElementById("login-link").style.display = "inline-block";
+                document.getElementById("register-link").style.display = "inline-block";
+                document.getElementById("logout-btn").style.display = "none";
+        
+                document.getElementById("login-link2").style.display = "inline-block";
+                document.getElementById("register-link2").style.display = "inline-block";
+                document.getElementById("logout-btn2").style.display = "none";
+        
+                document.querySelectorAll('.restricted .file').forEach(file => {
+                    file.classList.add('disabled');
+                });
+            }
+        });
+
+        window.logout = () => {
+            signOut(auth).then(() => {
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Logout failed", error);
+            });
+        };
+        // Function to check authentication before opening PDFs
+        function checkAuthAndOpenPDF(pdfSrc) {
+            const user = auth.currentUser;
+            if (user) {
+                document.getElementById('pdfFrame').src = pdfSrc;
+            } else {
+                alert("You must be logged in to view this PDF.");
+                window.location.href = "login.html";
+            }
+        }
+
+        document.querySelectorAll('.file').forEach(file => {
+             file.addEventListener('click', function() {
+                document.getElementById('pdfFrame').src = this.getAttribute('data-src');
+            checkAuthAndOpenPDF(this.getAttribute('data-src'));
+
+             });
+
+        });
+        
+    </script>
+    
+<!-- Script End -->
+</body>
+</html>

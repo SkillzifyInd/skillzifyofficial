@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Login - Skillzify</title>
+    <link rel="stylesheet" href="style.css">
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="b440bc32-e9ac-43be-89a3-953408233c6f" type="text/javascript" async></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EMJ8DSPWYE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-EMJ8DSPWYE');
+    </script>
+    <style>
+        /* Updated login page styles */
+        p {
+            color: red;
+        }
+
+        h2 {
+            color: white;
+        }
+
+        .form-container {
+            display: flex;
+            margin: 110px auto 55px auto;
+            max-width: 1100px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-image {
+            flex: 1;
+            background: linear-gradient(135deg, #3a59e3 0%, #ab83d2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite alternate;
+        }
+
+        .form-image img {
+            width: 100%;
+            max-width: 250px;
+            margin-top: 20px;
+        }
+
+        .login-form {
+            flex: 1;
+            background: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background-color: #4a67e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-form button:hover {
+            background-color: #3246c8;
+        }
+
+        .login-form p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .login-form .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode .form-image {
+            background: linear-gradient(135deg, #4a67e3 0%, #2a5298 100%);
+        }
+
+        body.dark-mode .login-form {
+            background: #222;
+            color: white;
+        }
+
+        body.dark-mode .login-form input,
+        body.dark-mode .login-form button {
+            color: white;
+            border: 1px solid #555;
+        }
+        body.dark-mode .login-form h2 {
+            color: #4a67e3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="header-container" style="margin-top: -110px;">
+        <button class="menu-toggle" onclick="toggleSidebar()"><i class='bx bx-menu'></i></button>
+        <div class="logo">
+            <a href="index.html"><img id="logo-img" src="Dark No BG.png" alt="Skillzify Logo"></a>
+        </div>
+        <div class="nav">
+            <a href="index.html"><b>Home</b></a>
+            <a href="study_mate.html"><b>Study Materials</b></a>
+            <a href="Python Learning/index.html"><b>Python Learning</b></a>
+            <a href="compiler.html"><b>Python Compiler</b></a>
+            <a href="contact.html"><b>Contact</b></a>
+            <a href="aboutus.html"><b>About Us</b></a>
+            <a href="register.html" id="register-link"><b>Register</b></a>
+            <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar-menu">
+        <span class="close-btn" onclick="toggleSidebar()">&times;</span>
+        <a href="index.html"><b>Home</b></a>
+        <a href="study_mate.html"><b>Study Materials</b></a>
+        <a href="Python Learning/index.html"><b>Python Learning</b></a>
+        <a href="compiler.html"><b>Python Compiler</b></a>
+        <a href="contact.html"><b>Contact</b></a>
+        <a href="aboutus.html"><b>About Us</b></a>
+        <a href="register.html" id="register-link2"><b>Register</b></a>
+        <button class="theme-toggle" onclick="toggleTheme()"><i class='bx bx-moon'></i></button>
+    </div>
+
+    <!-- Main Login Section -->
+    <div class="form-container">
+        <div class="form-image">
+            <h1>Welcome to Skillzify</h1>
+            <p style="color:white">Start your coding adventure.<br>Learn, Build, and Shine! 🌟</p>
+            <img src="login.png" alt="Skillzify Illustration">
+        </div>
+        <div class="login-form">
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <input type="password" id="password" placeholder="Enter your password" minlength="6" required>
+                <button type="submit">Login</button>
+                <p><a href="forgotpass.html" id="forgot-password">Forgot Password?</a></p>
+            </form>
+            <p><b>Don't have an account? </b><a href="register.html">Register here</a></p>
+        </div>
+    </div>
+
+    <a href="https://whatsapp.com/channel/0029Vb0aOSuG8l5DXJAK0S3X" class="whatsapp-float" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+
+    <div class="footer">
+        <h5>&copy; 2025 Skillzify. All Rights Reserved.</h5>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            let darkMode = localStorage.getItem("dark-mode");
+            document.body.classList.toggle('dark-mode', darkMode !== "enabled");
+            localStorage.setItem("dark-mode", darkMode === "enabled" ? "disabled" : "enabled");
+            document.getElementById("logo-img").src = darkMode === "enabled" ? "Dark No BG.png" : "Light No BG.png";
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar-menu").classList.toggle("active");
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                document.getElementById("logo-img").src = "Light No BG.png";
+            }
+        };
+    </script>
+
+    <!-- Firebase login and session persistence -->
+    <script type="module">
+        // Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAuth, setPersistence, browserLocalPersistence, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3FcUoQZ811vygR9oDITUwwiCDALYJ5zE",
+            authDomain: "skillzify2024.firebaseapp.com",
+            databaseURL: "https://skillzify2024-default-rtdb.firebaseio.com",
+            projectId: "skillzify2024",
+            storageBucket: "skillzify2024.appspot.com",
+            messagingSenderId: "502836069827",
+            appId: "1:502836069827:web:db3ff7fd2fd161c4d6a976",
+            measurementId: "G-EMJ8DSPWYE"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Set session persistence
+        setPersistence(auth, browserLocalPersistence)
+            .then(() => {
+                console.log("Session persistence set to LOCAL.");
+            })
+            .catch((error) => {
+                console.error("Persistence error:", error);
+            });
+
+        // Redirect if user already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = "index.html";
+            }
+        });
+
+        // Login form handling
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert("Login successful!");
+                window.location.href = "index.html";
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    </script>
+
+</body>
+</html>
